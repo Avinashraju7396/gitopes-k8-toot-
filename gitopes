@@ -1,0 +1,141 @@
+Argo CD is a declarative continuous delivery tool for Kubernetes. It can be used as a standalone tool or as a part of your CI/CD workflow to deliver needed resources to your clusters.
+
+example:-
+----------
+
+Developer → Git push → Argo CD watches → Detect change → Apply to K8s → Live update
+
+----------------------------------------------------------------------------------------------------------------
+
+Install process
+
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+kubectl get pods -n argocd
+
+kubectl get svc -n argocd
+
+kubectl edit svc argocd-server -n argocd
+
+kubectl get svc -n argocd
+
+#access it nodeIp:Nodeport
+
+kubectl get secrets -n argocd
+
+user= admin
+
+kubectl edit secret argocd-initial-admin-secret -n argocd    # to get intial credential to login argocd
+
+
+echo bnFabGx3emtCNjB5dFZQSA== | base64  --decode
+
+
+For more details:
+
+#Refer below blog
+
+
+https://medium.com/@veerababu.narni232/a-complete-overview-of-argocd-with-a-practical-example-f4a9a8488cf9
+
+----------------------------------------------------------------------------------------------------
+🚀 What is GitOps in Kubernetes?
+
+GitOps is a way of managing your Kubernetes cluster using Git as the single source of truth.
+
+👉 Instead of manually running kubectl apply, you:
+
+1)Store all your Kubernetes YAML files in Git
+2)Use a tool that automatically syncs Git → Kubernetes cluster
+
+Code change → Git push → Tool detects → Auto deploy → Cluster updated → Continuous sync
+
+
+🎯 Key Point
+
+👉 Everything is automatic after Git push
+👉 No need for manual deployment
+👉 Cluster is always controlled by Git
+
+        👨‍💻 Developer
+              │
+              │  (1) Update YAML (deployment.yaml)
+              ▼
+        📂 Git Repository (GitHub)
+        (Desired State Stored)
+              │
+              │  (2) Git Push
+              ▼
+   🔄 GitOps Tool (Argo CD / Flux)
+   - Watches Git continuously
+   - Detects changes
+   - Compares states
+              │
+              │  (3) Auto Sync
+              ▼
+     ☸️ Kubernetes Cluster
+     (Actual State Updated)
+              │
+              │  (4) Running Pods/Services
+              ▼
+        📦 Application Running
+
+---------------------------------------------------
+
+🔁 Continuous Loop (Self-Healing):
+
+Kubernetes Cluster (changed manually ❌)
+              │
+              ▼
+GitOps Tool detects drift
+              │
+              ▼
+Re-sync from Git ✅
+              │
+              ▼
+Cluster restored to correct state
+
+-----------------------------------------------------------------
+Advantages:-
+---------------
+
+Here are **advantages of GitOps (one-page list only)**:
+
+---
+
+* Automation of deployments
+* Git as single source of truth
+* Easy rollback using Git history
+* Self-healing (auto-correct drift)
+* Continuous synchronization (real-time updates)
+* Version control and audit tracking
+* Improved team collaboration (PR-based workflow)
+* Reduced manual errors
+* Faster and consistent deployments
+* Better visibility of cluster state (using tools like Argo CD)
+* Declarative infrastructure management
+* Easy disaster recovery (recreate from Git)
+* Standardized deployment process
+* Works well with CI/CD pipelines
+* Scalable for multi-environment setups (dev/stage/prod)
+
+---
+1. Write code (YAML)
+        ↓
+2. Push to Git
+        ↓
+3. GitOps tool watches Git
+        ↓
+4. Detects change
+        ↓
+5. Automatically deploys to Kubernetes
+        ↓
+6. App runs in cluster
+        ↓
+7. Keeps checking (continuous sync)
+
+-------------------------------------------
+👉 Push to Git → Automatically deploy to Kubernetes → Always stays in sync
+
+
